@@ -18,6 +18,7 @@ from pytube import YouTube
 import clipboard
 import time
 import speedtest
+# wheel file error
 from playsound import playsound
 from tkinter import *
 from tkinter.ttk import *
@@ -28,6 +29,7 @@ from pynput.mouse import Button, Controller
 from pynput.keyboard import Key, Controller as KeyboardController
 import pyautogui    
 import numpy as np
+import pyaudio
 import os
 import youtube_dl
 import sys
@@ -80,7 +82,7 @@ def wishMe():
     elif hour >=20 and hour<=23:
         engine.setProperty('voice', voices[0].id)
         engine.setProperty('rate', 170)
-        with open(r"E:\desktop files\Hey Buddy project\Hey Buddy project\Software\wishes\night.txt", "r") as file:
+        with open(r"./Software/wishes\night.txt", "r") as file:
             allText = file.read()
             words = list(map(str, allText.splitlines()))
             night=random.choice(words)
@@ -91,7 +93,7 @@ def wishMe():
     elif hour >= 12 and hour < 18:
         engine.setProperty('voice', voices[0].id)
         engine.setProperty('rate', 170)
-        with open(r"E:\desktop files\Hey Buddy project\Hey Buddy project\Software\wishes\afternoon.txt", "r") as file:
+        with open(r"./Software/wishes\afternoon.txt", "r") as file:
             allText = file.read()
             words = list(map(str, allText.splitlines()))
             afternoon=random.choice(words)
@@ -102,7 +104,7 @@ def wishMe():
     else:
         engine.setProperty('voice', voices[0].id)
         engine.setProperty('rate', 170)
-        with open(r"E:\desktop files\Hey Buddy project\Hey Buddy project\Software\wishes\evening.txt", "r") as file:
+        with open(r"./Software/wishes\evening.txt", "r") as file:
             allText = file.read()
             words = list(map(str, allText.splitlines()))
             evening = random.choice(words)
@@ -406,20 +408,20 @@ def skip_Ads():
     # speak("done")
  
 def subscribe_buttonClick():
-    subscribe = pyautogui.locateCenterOnScreen("subscribechannel.png")
+    subscribe = pyautogui.locateCenterOnScreen("./Software/subscribechannel.png")
     print(subscribe)
     if subscribe is not None:
         pyautogui.click(subscribe)
         print("Subscribed the channel!")
            
 def unSubscribe_buttonClick():
-    unsubscribe = pyautogui.locateCenterOnScreen("unsubscribechannel.png")
+    unsubscribe = pyautogui.locateCenterOnScreen("./Software/unsubscribechannel.png")
     print(unsubscribe)
     if unsubscribe is not None:
         pyautogui.click(unsubscribe)
         print("Unsubscribed the channel!")
     time.sleep(1)
-    bluebutton = pyautogui.locateCenterOnScreen("unsubscribebluebutton.png")
+    bluebutton = pyautogui.locateCenterOnScreen("./Software/unsubscribebluebutton.png")
     print(bluebutton)
     if bluebutton is not None:
         pyautogui.click(bluebutton)
@@ -429,7 +431,7 @@ def unSubscribe_buttonClick():
             
 def likebutton():
     if True:
-        like = pyautogui.locateCenterOnScreen("likebutton.png")
+        like = pyautogui.locateCenterOnScreen("./Software/likebutton.png")
         print(like)
         if like is not None:
             pyautogui.click(like)
@@ -438,7 +440,7 @@ def likebutton():
             print("i didnt find like button")
 def dislikebutton():
     if True:
-        dislike = pyautogui.locateCenterOnScreen("dislikebutton.png")
+        dislike = pyautogui.locateCenterOnScreen("./Software/dislikebutton.png")
         print(dislike)
         if dislike is not None:
             pyautogui.click(dislike)
@@ -447,7 +449,7 @@ def dislikebutton():
             print("i didnt find dislike button")
 def comment():
     if True:
-        comment = pyautogui.locateCenterOnScreen("comment.png")
+        comment = pyautogui.locateCenterOnScreen("./Software/comment.png")
         print(comment)
         if comment is not None:
             pyautogui.click(comment)
@@ -456,7 +458,7 @@ def comment():
             print("i didnt find comment section")
 def postcomment():
     if True:
-        postcomment = pyautogui.locateCenterOnScreen("postcomment.png")
+        postcomment = pyautogui.locateCenterOnScreen("./Software/postcomment.png")
         print(postcomment)
         if postcomment is not None:
             pyautogui.click(postcomment)
@@ -465,7 +467,7 @@ def postcomment():
             print("i didnt find postcomment section")
 def cancelcomment():
     if True:
-        cancelcomment = pyautogui.locateCenterOnScreen("cancelcomment.png")
+        cancelcomment = pyautogui.locateCenterOnScreen("./Software/cancelcomment.png")
         print(cancelcomment)
         if cancelcomment is not None:
             pyautogui.click(cancelcomment)
@@ -475,7 +477,7 @@ def cancelcomment():
                 
 def showmore():
     if True:
-        showmore = pyautogui.locateCenterOnScreen("showmore.png")
+        showmore = pyautogui.locateCenterOnScreen("./Software/showmore.png")
         print(showmore)
         if showmore is not None:
             pyautogui.click(showmore)
@@ -485,7 +487,7 @@ def showmore():
                 
 def showless():
     if True:
-        showless = pyautogui.locateCenterOnScreen("showless.png")
+        showless = pyautogui.locateCenterOnScreen("./Software/showless.png")
         print(showless)
         if showless is not None:
             pyautogui.click(showless)
@@ -496,7 +498,7 @@ def showless():
 
 def ythomepage():
     if True:
-        ythomepage = pyautogui.locateCenterOnScreen("ythomepage.png")
+        ythomepage = pyautogui.locateCenterOnScreen("./Software/ythomepage.png")
         print(ythomepage)
         if ythomepage is None:
             print("i didnt find ythomepage section")
@@ -507,7 +509,7 @@ def ythomepage():
     
 def ytsearch():
     if True:
-        ytsearch = pyautogui.locateCenterOnScreen("ytsearch.png")
+        ytsearch = pyautogui.locateCenterOnScreen("./Software/ytsearch.png")
         print(ytsearch)
         if ytsearch is None:
             print("i didnt find ytsearch section")
@@ -529,7 +531,7 @@ def ytsearchbutton():
 
 def ytvoicesearch():
     if True:
-        ytvoicesearch = pyautogui.locateCenterOnScreen("ytvoicesearch.png")
+        ytvoicesearch = pyautogui.locateCenterOnScreen("./Software/ytvoicesearch.png")
         print(ytvoicesearch)
         if ytvoicesearch is None:
             print("i didnt find ytvoicesearch section")
@@ -561,7 +563,7 @@ def cancelvoicesearch():
                 
 def thispc():
     if True:
-        thispc = pyautogui.locateCenterOnScreen("thispc.png")
+        thispc = pyautogui.locateCenterOnScreen("./Software/thispc.png")
         print(thispc)
         if thispc is None:
             print("i didnt find cancelvoicesearch section")
@@ -571,7 +573,7 @@ def thispc():
         
 def ytmenu():
     if True:
-        ytmenu = pyautogui.locateCenterOnScreen("ytmenu.png")
+        ytmenu = pyautogui.locateCenterOnScreen("./Software/ytmenu.png")
         print(ytmenu)
         if ytmenu is None:
             print("i didnt find youtube menu")
@@ -580,7 +582,7 @@ def ytmenu():
             print("yotube menu activated")
         
 def saveplaylist():
-    saveplaylist = pyautogui.locateCenterOnScreen("saveplaylist.png")
+    saveplaylist = pyautogui.locateCenterOnScreen("./Software/saveplaylist.png")
     print(saveplaylist)
     if saveplaylist is not None:
         pyautogui.click(saveplaylist)
@@ -616,7 +618,7 @@ def openqrc():
 
         
 def savetoWatchlater():
-    savetoWatchlater = pyautogui.locateCenterOnScreen("savetoWatchlater.png")
+    savetoWatchlater = pyautogui.locateCenterOnScreen("./Software/savetoWatchlater.png")
     print(savetoWatchlater)
     if savetoWatchlater is not None:
         pyautogui.click(savetoWatchlater)
@@ -624,7 +626,7 @@ def savetoWatchlater():
     else:
         print("i didnt find youtube menu")
 def savetoProject():
-    savetoProject = pyautogui.locateCenterOnScreen("savetoProject.png")
+    savetoProject = pyautogui.locateCenterOnScreen("./Software/savetoProject.png")
     print(savetoProject)
     if savetoProject is None:
         print("i didnt find youtube menu")
@@ -632,7 +634,7 @@ def savetoProject():
         pyautogui.click(savetoProject)
         print("yotube menu")
 def savetoSongs():
-    savetoSongs = pyautogui.locateCenterOnScreen("savetoSongs.png")
+    savetoSongs = pyautogui.locateCenterOnScreen("./Software/savetoSongs.png")
     print(savetoSongs)
     if savetoSongs is not None:
         pyautogui.click(savetoSongs)
@@ -640,7 +642,7 @@ def savetoSongs():
     else:
         print("i didnt find youtube menu")
 def savetoMovies():
-    savetoMovies = pyautogui.locateCenterOnScreen("savetoMovies.png")
+    savetoMovies = pyautogui.locateCenterOnScreen("./Software/savetoMovies.png")
     print(savetoMovies)
     if savetoMovies is not None:
         pyautogui.click(savetoMovies)
@@ -649,7 +651,7 @@ def savetoMovies():
         print("i didnt find youtube menu")
 def ytnotification():
     if True:
-        ytnotification = pyautogui.locateCenterOnScreen("ytnotification.png")
+        ytnotification = pyautogui.locateCenterOnScreen("./Software/ytnotification.png")
         if ytnotification is not None:
             pyautogui.click(ytnotification)
             print("yotube notification activated")
@@ -678,7 +680,7 @@ def youtube_video2mp3_converter():
     options = {
         'format': 'bestaudio/best',
         'keepvideo': False,
-        'outtmpl': fr'E:\desktop files\Hey Buddy project\Hey Buddy project\Software\download file/{filename}'
+        'outtmpl': fr'./Software/download file/{filename}'
     }
     speak("converting this video to audio")
     with youtube_dl.YoutubeDL(options) as ydl:
@@ -693,7 +695,7 @@ def youtube_video2mp3_converter():
     if 'yes' in response:
         filename = f"{filename}"
         filename = filename.replace("|", '')
-        mp3song = fr"E:\desktop files\Hey Buddy project\Hey Buddy project\Software\download file\{filename}"
+        mp3song = fr"./Software/download file/{filename}"
         os.startfile(mp3song) 
 
     else:
@@ -703,8 +705,8 @@ def youtube_video2mp3_converter():
 def insta_story():
     a_dictionary = {}
     a_file = open(
-        r"E:\desktop files\Hey Buddy project\Hey Buddy project\Software\Details\instagram friends Id.txt", "r")
-    myTable = PrettyTable(["\033[93mName\033[00m","\033[93mInstagram Id\033[00m"])
+        r"./Software/Details/instagram friends Id.txt", "r")
+    myTable = PrettyTable(["\033[93mName/033[00m","\033[93mInstagram Id\033[00m"])
     for line in a_file:
         key, value = line.split()
         if "_" in key:
@@ -723,7 +725,7 @@ def insta_story():
         wb.open(f'https://www.instagram.com/stories/{instaId}/')
         print("video gonna play in 10 seconds")
         time.sleep(10)  # 10 sec
-        vstory = pyautogui.locateCenterOnScreen("view story.png")
+        vstory = pyautogui.locateCenterOnScreen("./Software/view story.png")
         print(vstory)
         if vstory is not None:
             pyautogui.click(vstory)
@@ -732,7 +734,7 @@ def insta_story():
         
     except KeyError as e:
         print(f"\033[91m\t\t\t\t--->Id not Found<---\t\t\t\t\n\033[00m")
-        print(f"\033[91m\t\t\t\t{query.upper()} is not in my database\t\t\t\t\n\033[00m")
+        print(f"\033[91m\t\t\t\t{query.upper()} is not in my database/t\t\t\t\n\033[00m")
         speak("do you want me to display the available insta id list")
         query=takeCommand.lower()
         if 'yes' == query or 'ok'==query:
@@ -811,7 +813,7 @@ def onlineplayer(query):
         elif control == 'download this song' or control == 'download':
             print("Size is %s" % best.get_filesize())
             filename = best.download(
-                r"E:\desktop files\Hey Buddy project\Hey Buddy project\Software\download file")
+                r"./Software/download file")
             print("Audio downloaded..")
             speak("Audio downloaded..")
 
@@ -899,20 +901,20 @@ def resume_call():
     print("Resuming call")
 
 # ------------------------------Main---------------------------------------
-
 if __name__ == "__main__":
+
     msg.notify(title="Hey Buddy!", message="Application Started...",
-               app_icon=r'E:\desktop files\Hey Buddy project\Hey Buddy project\Software\HB-icon.ico', timeout=3)
-    playsound(r"E:\desktop files\Hey Buddy project\Hey Buddy project\Software\On.mp3")
+            app_icon=r'./Software/HB-icon.ico', timeout=3)
+    playsound(r"./Software/On.mp3")
     msg.notify(title="Hey Buddy!", message="Hey Buddy Activated...",
-               app_icon=r'E:\desktop files\Hey Buddy project\Hey Buddy project\Software\HB-icon.ico', timeout=5)
+            app_icon=r'./Software/HB-icon.ico', timeout=5)
     print("Processing....")
     # speak("Processing....")
     print("Connecting to server....")
     # speak("Connecting to server....")
     print("Turning on...")
     # speak("Turning on...")
-    print('\033[92m>>>>>>>>>>>>>>>>>>>>\033[00m'+'[ '+'\033[91mH\033[00m'+'\033[93mE\033[00m'+"Y "+'\033[91mB\033[00m'+'\033[93mUDD\033[00m'+"Y"+'\033[91m! \033[00m'+'\033[93mACTIVATED\033[00m'+' ]'+'\033[92m<<<<<<<<<<<<<<<<<<<<\033[00m')
+    print('\033[92m>>>>>>>>>>>>>>>>>>>>\033[00m'+'[ '+'\033[91mH\033[00m'+'\033[93mE/033[00m'+"Y "+'\033[91mB\033[00m'+'\033[93mUDD\033[00m'+"Y"+'\033[91m! \033[00m'+'\033[93mACTIVATED\033[00m'+' ]'+'\033[92m<<<<<<<<<<<<<<<<<<<<\033[00m')
     password = 'rohan'
     print("Knock! Knock! Who's there?")
     speak("Knock Knock")
@@ -920,14 +922,14 @@ if __name__ == "__main__":
     speak("Who's there?")
     query = takeCommand().lower()
     if password == query: #basic security --has to be upgraded
-        ply = vlc.MediaPlayer( r"E:\desktop files\Hey Buddy project\Hey Buddy project\Software\accepted.mp3")
+        ply = vlc.MediaPlayer( r"./Software/accepted.mp3")
         good_states = ["State.Playing", "State.NothingSpecial", "StateOpening"]
         while str(ply.get_state()) in good_states:
             ply.play()
         ply.stop()
         speak("Access Granted!")
         msg.notify(title='Hey Buddy!', message='Access Granted.',
-                app_icon=r'E:\desktop files\Hey Buddy project\Hey Buddy project\Software\HB-icon.ico', timeout=3)      
+                app_icon=r'./Software/HB-icon.ico', timeout=3)      
         print("\033[92mAccess Granted!\033[00m\n\n\n\n")
         print("Granting permissions.......\n")
         time.sleep(1)
@@ -944,7 +946,7 @@ if __name__ == "__main__":
             import pywhatkit as kit
             print("\033[91m--------------->>\033[00m[ \t\tHey Buddy is ready to take you commands\t\t ]\033[91m<<---------------\033[00m")
             msg.notify(title="Hey Buddy!", message="Listening...",
-                       app_icon=r'E:\desktop files\Hey Buddy project\Hey Buddy project\Software\HB-icon.ico')
+                    app_icon=r'./Software/HB-icon.ico')
             engine = pyttsx3.init('sapi5')
             voices = engine.getProperty('voices')
             # # print(voices[1].id)
@@ -1562,7 +1564,7 @@ if __name__ == "__main__":
                         f'Upload speed: {upload_result / 1024 /1024:.2f} Mb per second')
                     speak(f'Ping: {download_result:.2f} ms')
                 elif 'open vscode' in query:
-                    vscd = "C:\\Users\\Rohan\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe"
+                    vscd = "C:\\Users\\Rohan\\AppData\\Local\\Programs\\Microsoft VS Code/\Code.exe"
                     os.startfile(vscd)
                 elif 'open cmd' in query or 'open command prompt' in query:
                     os.system("start cmd")
@@ -1602,7 +1604,7 @@ if __name__ == "__main__":
                     print("Activated")
                 elif 'reduce volume' in query:
                     pyautogui.press(['volumedown', 'volumedown', 'volumedown', 'volumedown', 'volumedown', 'volumedown',
-                                     'volumedown', 'volumedown', 'volumedown', 'volumedown', 'volumedown', 'volumedown'])
+                                    'volumedown', 'volumedown', 'volumedown', 'volumedown', 'volumedown', 'volumedown'])
                     print('done')
                 elif 'auto play on' in query or 'auto play off' in query:
                     print('The current pointer position is {0}'.format(mouse.position))
@@ -1992,7 +1994,7 @@ if __name__ == "__main__":
                     print("_________________________please wait_____________________________\n")
                     print("\nWait Buddy Downloading this video buddy....")
                     print("_________________________wait Until download is finished_____________________________\n")
-                    yt.streams.first().download(fr"E:\desktop files\Hey Buddy project\Hey Buddy project\Software\download file")
+                    yt.streams.first().download(fr"./Software/download file")
                     list = [1]
                     for i in tqdm(list):
                         time.sleep(2)
@@ -2006,7 +2008,7 @@ if __name__ == "__main__":
                     if 'yes' == condition:
                         filename=yt.title
                         # filename = filename.replace("|", '')
-                        video = fr"E:\desktop files\Hey Buddy project\Hey Buddy project\Software\download file\{filename}"
+                        video = fr"./Software/download file/{filename}"
                         os.startfile(video)
                     elif 'no' in condition:
                         speak("okay not a problem")
@@ -2029,7 +2031,7 @@ if __name__ == "__main__":
                     wb.open("https://vimoviesandtv.in/live-tv-channels/colors-kannada-hd/361388")
                 elif 'hey google' == query:
                     if True:
-                        okgoogle= pyautogui.locateCenterOnScreen("ok google.png")
+                        okgoogle= pyautogui.locateCenterOnScreen("./Software/ok google.png")
                         if okgoogle is not None:
                             pyautogui.click(okgoogle)
                             print("Hey google activated!")
@@ -2037,7 +2039,7 @@ if __name__ == "__main__":
                             print("Not found!")
                 elif 'ok google' == query:
                     if True:
-                        okgoogle= pyautogui.locateCenterOnScreen("google voice.png")
+                        okgoogle= pyautogui.locateCenterOnScreen("./Software/google voice.png")
                         if okgoogle is not None:
                             pyautogui.click(okgoogle)
                             print("ok google activated!")
@@ -2061,7 +2063,7 @@ if __name__ == "__main__":
                         speak("im waiting for yours command.")
                         condition=takeCommand().lower()
                         if 'im ready' in condition or "i'm ready" in condition or 'ready' in condition:
-                            videobutton= pyautogui.locateCenterOnScreen("videobutton.png")
+                            videobutton= pyautogui.locateCenterOnScreen("./Software/videobutton.png")
                             try:
                                 speak("Recording starts in.")
                                 speak("3")
@@ -2102,7 +2104,7 @@ if __name__ == "__main__":
                         speak("im waiting for yours command.")
                         condition=takeCommand().lower()
                         if 'capture' == condition or 'click' == condition:
-                            capture= pyautogui.locateCenterOnScreen("capture.png")
+                            capture= pyautogui.locateCenterOnScreen("./Software/capture.png")
                             try:
                                 speak("lets take a snap in.")
                                 speak("3")
@@ -2213,7 +2215,7 @@ if __name__ == "__main__":
                     speak("playing your favourite songs, from your playlist in jio saavn")
                     wb.open(link)
                     time.sleep(3)
-                    play_list=pyautogui.locateCenterOnScreen("playlist_button.png")
+                    play_list=pyautogui.locateCenterOnScreen("./Software/playlist_button.png")
                     if play_list is not None:
                         pyautogui.click(play_list)
                         print("playing Fav playlist in jiosaavn!")
@@ -2352,7 +2354,7 @@ if __name__ == "__main__":
                     insta_story()
                 elif "clear clipboard" == query:
                     speak("clearing clipboard")
-                    clearall = pyautogui.locateCenterOnScreen("clearall.png")
+                    clearall = pyautogui.locateCenterOnScreen("./Software/clearall.png")
                     print(clearall)
                     if clearall is not None:
                         pyautogui.click(clearall)
@@ -2467,32 +2469,36 @@ if __name__ == "__main__":
                 query=takeCommand().lower()
                 if 'hey buddy' in query:
                     msg.notify(title="Hey Buddy!", message="Yes buddy, I'm waiting for your command...",
-                               app_icon=r'E:\desktop files\Hey Buddy project\Hey Buddy project\Software\HB-icon.ico', timeout=3)
+                            app_icon=r'./Software/HB-icon.ico', timeout=3)
                     wakeupBuddy()
                 elif "bye buddy" in query:
                     playsound(
-                        r"E:\desktop files\Hey Buddy project\Hey Buddy project\Software\Off.mp3")
+                        r"./Software/Off.mp3")
                     time.sleep(2)
                     print("Processing....")
                     print("Turning off...")
                     speak("Hey Buddy deactivated")
-                    msg.notify(title="Hey Buddy!",message="Hey Buddy Deactivated...",app_icon=r'E:\desktop files\Hey Buddy project\Hey Buddy project\Software\HB-icon.ico', timeout=3)
+                    msg.notify(title="Hey Buddy!",message="Hey Buddy Deactivated...",app_icon=r'./Software/HB-icon.ico', timeout=3)
                     print('\033[92m>>>>>>>>>>>>>>>>>>>>[\033[00m' +" Hey Buddy Deactivated "+'\033[92m]<<<<<<<<<<<<<<<<<<<<\033[00m')
                     
                     sys.exit()
-                    
+    
+                        
     else:
         import vlc
         good_states = ["State.Playing", "State.NothingSpecial", "State.Opening"]
-        ply = vlc.MediaPlayer(r"E:\desktop files\Hey Buddy project\Hey Buddy project\Software\denied.mp3")
-        while str(ply.get_state()) in good_states:
-            ply.play()
-        print("\033[91mAccess denied!\033[00m")
-        speak("Access denied!")
-        print("Unauthorized user")
-        m = vlc.MediaPlayer(r"E:\desktop files\Hey Buddy project\Hey Buddy project\Software\Off.mp3")
-        while str(m.get_state()) in good_states:
-            m.play()
+        try:
+            ply = vlc.MediaPlayer(r"./Software/denied.mp3")
+            while str(ply.get_state()) in good_states:
+                ply.play()
+            print("\033[91mAccess denied!\033[00m")
+            speak("Access denied!")
+            print("Unauthorized user")
+            m = vlc.MediaPlayer(r"./Software/Off.mp3")
+            while str(m.get_state()) in good_states:
+                m.play()
+        except:
+            print("ON")
         print("\033[93m>>>>>>>>>>>>>>>>>>[ Hey Buddy Deactivated ]<<<<<<<<<<<<<<<<<<<<\033[00m3")
         speak("Hey Buddy Deactivated")
         speak("locking pc")
