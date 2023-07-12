@@ -57,6 +57,8 @@ while True:
     print("4. Forward 5 seconds")
     print("5. Rewind 5 seconds")
     print("6. Exit")
+    print("11. download")
+
     choice = int(input("Enter your choice: "))
 
     if choice == 0:
@@ -90,6 +92,25 @@ while True:
         media_player.stop()
         media_player.release()
         break
+    elif choice== 11 :
+            import os
+            # Output directory to save the audio
+            output_directory = "./Software/downloads"
+
+            # Create a youtube_dl options object
+            ydl_opts = {
+                'format': 'bestaudio/best',
+                'postprocessors': [{
+                    'key': 'FFmpegExtractAudio',
+                    'preferredcodec': 'mp3',
+                    'preferredquality': '192',
+                }],
+                'outtmpl': os.path.join(output_directory, '%(title)s.%(ext)s')
+            }
+            with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+                ydl.download([audio_url])
+                
+                print(f"{title} Downloaded")
     else:
         print("Invalid choice. Please try again.")
 

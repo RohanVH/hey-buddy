@@ -1,11 +1,14 @@
 from plyer import notification as msg
+import vlc
 import youtube_dl
 import urllib.request as ytsearch
 import re
 import vlc
-import pywhatkit as kit
+import webbrowser as wb
 from googlesearch import search
+import random
 from tqdm import tqdm
+import os
 from prettytable import PrettyTable
 from gtts import gTTS
 from audioplayer import AudioPlayer
@@ -34,6 +37,8 @@ from pynput.keyboard import Key, Controller as KeyboardController
 import pyautogui    
 import numpy as np
 import pyaudio
+import os
+import youtube_dl
 import sys
 import ctypes
 from PyPDF2 import PdfFileReader
@@ -746,13 +751,19 @@ def insta_story():
 
 
 def onlineplayer(query):
+    import youtube_dl
+    import urllib.request as ytsearch
+    import re
+    import vlc
+    import webbrowser as wb
+    from googlesearch import search
+    import random
     print(f"searching {query} in youtube")
     speak(f"searching {query} in youtube")
     search = query.replace(' ', '+')
 
     # -------------> getting html content of the yt video to get its ID
-    html = ytsearch.urlopen(
-        'https://www.youtube.com/results?search_query='+search)
+    html = ytsearch.urlopen('https://www.youtube.com/results?search_query='+search)
     # -------------------------> extratying Video ID From html data
 
     video_id = re.findall(r'watch\?v=(\S{11})', html.read().decode())
@@ -797,7 +808,6 @@ def onlineplayer(query):
         print("5. Rewind")
         print("6. Download Audio")
         print("7. Exit\n")
-        choice = int(input("Enter your choice: "))
 
         if control == 'open lyrics' or control == 'show lyrics':
             
@@ -853,13 +863,15 @@ def onlineplayer(query):
                 }],
                 'outtmpl': os.path.join(output_directory, '%(title)s.%(ext)s')
             }
-
-            # Create a youtube_dl instance
-            with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-                # Download the audio
-                ydl.download([video_url])
-                
-                print(f"{title} Downloaded")
+            try:
+                # Create a youtube_dl instance
+                with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+                    # Download the audio
+                    ydl.download([video_url])
+                    
+                    print(f"{title} Downloaded")
+            except Exception as e:
+                print(e)
         elif 'close window' in query:
                     speak("wait a sec buddy closing window")
                     keyboard.press(Key.alt)
@@ -996,7 +1008,7 @@ if __name__ == "__main__":
         speak("Hey there,feel free to reach out me as Hey Buddy")
 
         def wakeupBuddy():
-            
+            import pywhatkit as kit
             print("\033[91m--------------->>\033[00m[ \t\tHey Buddy is ready to take you commands\t\t ]\033[91m<<---------------\033[00m")
             msg.notify(title="Hey Buddy!", message="Listening...",
                     app_icon=r'./Software/HB-icon.ico')
@@ -2421,7 +2433,7 @@ if __name__ == "__main__":
                     link = f"https://www.google.com/search?q=meaning%20of%20{question}&gs_ivs=1#tts=0&dobs={question}"
                     wb.open(link)
                 
-                elif 'connect my device' == query:
+                elif 'connect to my device' == query:
                     os.system('adb connect 192.168.1.101:9090')
                 if 'connect my device' == query:
                     try:
@@ -2439,7 +2451,7 @@ if __name__ == "__main__":
                     print("Tell me the Person name: ")
                     speak("Tell me the Person name: ")
                     query=takeCommand().lower()
-                    call_book = {'ajji':'7676062533','amma':'7483132135','akka':'7411678135','appa':'9480477169','anita Mam':'9901006412','arpitha':'9972691769','janaki Mam':'9480443972','khushi':'8088408445','komal':'6360696740','naveen':'8050039951','nayana akka':'6364414046','nishu':'8095820463','pranitha':'8296132796','pushpa aunty':'9008252604','rishi':'8861742604','sachin':'7795442095','sai bro bhalki':'6362587380','sangeetha Mam':'9035298900','santhu':'8088152109','sarika':'9108975122','shashi biradar':'9110239301','shashidhar':'8147484364','shilpa mam':'7022007065','sneha':'7026685212'}  # ------------- List of phone number
+                    call_book = {'ajji':'7676062533','amma':'7483132135','akka':'7411678135','appa':'9480477169','anita Mam':'9901006412','arpitha':'9972691769','janaki Mam':'9480443972','khushi':'8088408445','komal':'6360696740','naveen':'8050039951','nayana akka':'6364414046','nishu':'8095820463','pranitha':'8296132796','pushpa aunty':'9008252604','rishi':'8861742604','sachin':'7795442095','sai bro bhalki':'6362587380','sangeetha Mam':'9035298900','santhu':'8088152109','sarika':'9108975122','shashi biradar':'9110239301','shashidhar':'8147484364','shilpa mam':'7022007065','appaji':'9008099597'}  # ------------- List of phone number
                     names=f'{list(call_book)}'
                     person = query
                     print(f'Searching {person} in callbook...')
@@ -2499,6 +2511,7 @@ if __name__ == "__main__":
 
                 elif 'change port number' ==query:
                     mylist = ["5555", "8080", "9090","6969"]
+                    import random
                     os.system(f'adb tcpip {random.choice(mylist)}')
 
                 elif 'add call'== query:
@@ -2537,7 +2550,7 @@ if __name__ == "__main__":
     
                         
     else:
-        
+        import vlc
         good_states = ["State.Playing", "State.NothingSpecial", "State.Opening"]
         try:
             ply = vlc.MediaPlayer(r"./Software/denied.mp3")
