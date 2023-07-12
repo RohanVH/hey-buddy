@@ -1,5 +1,12 @@
 from plyer import notification as msg
 import vlc
+import youtube_dl
+import urllib.request as ytsearch
+import re
+import vlc
+import webbrowser as wb
+from googlesearch import search
+import random
 from tqdm import tqdm
 import os
 from prettytable import PrettyTable
@@ -67,7 +74,7 @@ def wishMe():
     elif hour >= 3 and hour < 12:
         engine.setProperty('voice', voices[0].id)
         engine.setProperty('rate', 170)
-        with open(r"wishes\good morning wishes.txt", "r") as file:
+        with open(r"wishes\good morning wishes.txt", "r", encoding="utf8") as file:
             allText = file.read()
             words = list(map(str, allText.splitlines()))
             morning=random.choice(words)
@@ -82,7 +89,7 @@ def wishMe():
     elif hour >=20 and hour<=23:
         engine.setProperty('voice', voices[0].id)
         engine.setProperty('rate', 170)
-        with open(r"./Software/wishes\night.txt", "r") as file:
+        with open(r"./Software/wishes/night.txt", "r", encoding="utf8") as file:
             allText = file.read()
             words = list(map(str, allText.splitlines()))
             night=random.choice(words)
@@ -93,7 +100,7 @@ def wishMe():
     elif hour >= 12 and hour < 18:
         engine.setProperty('voice', voices[0].id)
         engine.setProperty('rate', 170)
-        with open(r"./Software/wishes\afternoon.txt", "r") as file:
+        with open(r"./Software/wishes/afternoon.txt", "r", encoding="utf8") as file:
             allText = file.read()
             words = list(map(str, allText.splitlines()))
             afternoon=random.choice(words)
@@ -104,7 +111,7 @@ def wishMe():
     else:
         engine.setProperty('voice', voices[0].id)
         engine.setProperty('rate', 170)
-        with open(r"./Software/wishes\evening.txt", "r") as file:
+        with open(r"./Software/wishes/evening.txt", "r", encoding="utf8") as file:
             allText = file.read()
             words = list(map(str, allText.splitlines()))
             evening = random.choice(words)
@@ -705,7 +712,7 @@ def youtube_video2mp3_converter():
 def insta_story():
     a_dictionary = {}
     a_file = open(
-        r"./Software/Details/instagram friends Id.txt", "r")
+        r"./Software/Details/instagram friends Id.txt", "r", encoding="utf8")
     myTable = PrettyTable(["\033[93mName/033[00m","\033[93mInstagram Id\033[00m"])
     for line in a_file:
         key, value = line.split()
@@ -747,10 +754,6 @@ def onlineplayer(query):
     print(f"searching {query} in youtube")
     speak(f"searching {query} in youtube")
     search = query.replace(' ', '+')
-    import urllib.request as ytsearch
-    import re
-    import vlc
-    import pafy
 
     # -------------> getting html content of the yt video to get its ID
     html = ytsearch.urlopen(
@@ -758,71 +761,126 @@ def onlineplayer(query):
     # -------------------------> extratying Video ID From html data
 
     video_id = re.findall(r'watch\?v=(\S{11})', html.read().decode())
-    link = 'https://www.youtube.com/watch?v='+video_id[0]
-    print(link)
+    video_url = 'https://www.youtube.com/watch?v='+video_id[0]
+    print(video_url)
 
-    video = pafy.new(link)
 
-    print(f"Audio title=\t{video.title}\n")
 
-    print(f"Audio rating=\t{video.rating}\n")
+    # Extract the audio URL using youtube_dl
+    ydl_opts = {
+        'format': 'bestaudio/best',
+        'extractaudio': True,
+        'audioformat': 'mp3',
+        'outtmpl': '%(id)s.%(ext)s',
+    }
 
-    print(f"Views=\t\t {video.viewcount}\n")
+    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+        info = ydl.extract_info(video_url, download=False)
+        audio_url = info['url']
+    title=info['title']
+    # Print the video details
+    print("Title:", title)
+    # Create a vlc instance
+    vlc_instance = vlc.Instance()
 
-    print(f"Author=\t\t{video.author}\nLength=\t{video.length}\n")
+    # Create a vlc MediaPlayer object
+    media_player = vlc_instance.media_player_new()
 
-    print(
-        f"Audio Duration=\t{video.duration}\nLikes=\t\t{video.likes}\nDislikes=\t\t{video.dislikes}\n\n\n")
-    best = video.getbestaudio()
-    playurl = best.url
-    ins = vlc.Instance('--no-video ')
-    player = ins.media_player_new()
-    code = ytsearch.urlopen(link).getcode()
-    if str(code).startswith('2') or str(code).startswith('3'):
-        print('Stream is working')
-        print("playing audio from youtube...")
-    else:
-        print('Stream is dead')
+    # Load the audio URL into vlc MediaPlayer
+    media = vlc_instance.media_new(audio_url)
+    media_player.set_media(media)
 
-    player.set_media(vlc.Instance().media_new(playurl))
-    player.play()
-    print("File Size is %s" % best.get_filesize())
-    good_states = ["State.Playing", "State.NothingSpecial", "State.Opening"]
-
-    while str(player.get_state()) in good_states:
+    # Play the audio
+    media_player.play()
+    while True:
         control = takeCommand().lower()
-        if control == 'stop' or control == 'stop playing' or control == 'stop music':
-            print("closing audio!")
-            player.stop()
+        print("\n0. lyrics")
+        print("1. Pause")
+        print("2. Resume")
+        print("3. Stop")
+        print("4. Forward")
+        print("5. Rewind")
+        print("6. Download Audio")
+        print("7. Exit\n")
+        choice = int(input("Enter your choice: "))
+
+        if control == 'open lyrics' or control == 'show lyrics':
+            
+            query = query
+            for i in search(query+" lyrics in english"):
+                list=[i]
+                break
+            random_link=str(random.choices(list))
+            lyrics_link = str(random_link[2:-2])
+            print(lyrics_link)
+            wb.open(lyrics_link)
+        elif control == 'pause' or control == 'pause music':
+            media_player.pause()
+        elif control == 'play' or control == 'start' or control == 'play music':
+            media_player.play()
+        elif control == 'stop' or control == 'stop playing' or control == 'stop music':
+            print("Turning off")
+            speak("Turning off ")
+            media_player.stop()
             break
-        elif 'play' in control:
-            search = control.replace('play', '')
-            player.stop()
-            onlineplayer(search)
+        elif control == 'forward' or control == 'forward 20 seconds':
+            # Forward 10 seconds
+            current_time = media_player.get_time()
+            new_time = current_time + 20000  # 20000 milliseconds = 20 seconds
+            media_player.set_time(new_time)
+        elif control == 'forward a bit' or control == 'forward 10 seconds':
+            # Forward 10 seconds
+            current_time = media_player.get_time()
+            new_time = current_time + 10000  # 10000 milliseconds = 10 seconds
+            media_player.set_time(new_time)
 
-        elif control == 'pause' or control == 'hold' or control == 'wait':
-            player.set_pause(1)
-            control = takeCommand().lower()
-            if control == 'play':
-                player.play()
-                control = takeCommand().lower()
-        elif control == 'play next':
-            player.next()
-        elif control == 'play previous song':
-            player.previous()
-        elif control == 'download this song' or control == 'download':
-            print("Size is %s" % best.get_filesize())
-            filename = best.download(
-                r"./Software/download file")
-            print("Audio downloaded..")
-            speak("Audio downloaded..")
+        elif control == 'rewind' or control == 'rewind 20 seconds':
+            # Rewind 10 seconds
+            current_time = media_player.get_time()
+            new_time = current_time - 20000  # 20000 milliseconds = 10 seconds
+            media_player.set_time(new_time)
+        elif control == 'rewind a bit' or control == 'rewind 10 seconds':
+            # Rewind 10 seconds
+            current_time = media_player.get_time()
+            new_time = current_time - 10000  # 20000 milliseconds = 10 seconds
+            media_player.set_time(new_time)
+        elif control == 'download this song' or control == 'download' :
+            # Output directory to save the audio
+            output_directory = "./Software/downloads"
 
-        print('Stream is working. Current state = {}'.format(player.get_state()))
+            # Create a youtube_dl options object
+            ydl_opts = {
+                'format': 'bestaudio/best',
+                'postprocessors': [{
+                    'key': 'FFmpegExtractAudio',
+                    'preferredcodec': 'mp3',
+                    'preferredquality': '192',
+                }],
+                'outtmpl': os.path.join(output_directory, '%(title)s.%(ext)s')
+            }
 
-    print('Stream is not working. Current state = {}'.format(player.get_state()))
+            # Create a youtube_dl instance
+            with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+                # Download the audio
+                ydl.download([video_url])
+                
+                print(f"{title} Downloaded")
+        elif 'close window' in query:
+                    speak("wait a sec buddy closing window")
+                    keyboard.press(Key.alt)
+                    keyboard.tap(Key.f4)
+                    keyboard.release(Key.alt)
+                    print("windows closed alt+f4 activated")
+        elif control == 'exit' or control == 'close' or control == 'close the music player':
+            media_player.stop()
+            media_player.release()
+            break
+        else:
+            print("Invalid choice. Please try again.")
 
-    print("control deactivated.")
 
+
+    
 
 def call(person):
     call_book = {'ajji':'7676062533','amma':'7483132135','akka':'7411678135','appa':'9480477169','anita Mam':'9901006412','arpitha':'9972691769','janaki Mam':'9480443972','khushi':'8088408445','komal':'6360696740','naveen':'8050039951','nayana akka':'6364414046','nishu':'8095820463','pranitha':'8296132796','pushpa aunty':'9008252604','rishi':'8861742604','sachin':'7795442095','sai bro bhalki':'6362587380','sangeetha Mam':'9035298900','santhu':'8088152109','sarika':'9108975122','shashi biradar':'9110239301','shashidhar':'8147484364','shilpa mam':'7022007065','sneha':'7026685212'}  # ------------- List of phone number
