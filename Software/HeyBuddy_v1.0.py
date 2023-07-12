@@ -1,14 +1,11 @@
 from plyer import notification as msg
-import vlc
 import youtube_dl
 import urllib.request as ytsearch
 import re
 import vlc
-import webbrowser as wb
+import pywhatkit as kit
 from googlesearch import search
-import random
 from tqdm import tqdm
-import os
 from prettytable import PrettyTable
 from gtts import gTTS
 from audioplayer import AudioPlayer
@@ -37,8 +34,6 @@ from pynput.keyboard import Key, Controller as KeyboardController
 import pyautogui    
 import numpy as np
 import pyaudio
-import os
-import youtube_dl
 import sys
 import ctypes
 from PyPDF2 import PdfFileReader
@@ -1001,7 +996,7 @@ if __name__ == "__main__":
         speak("Hey there,feel free to reach out me as Hey Buddy")
 
         def wakeupBuddy():
-            import pywhatkit as kit
+            
             print("\033[91m--------------->>\033[00m[ \t\tHey Buddy is ready to take you commands\t\t ]\033[91m<<---------------\033[00m")
             msg.notify(title="Hey Buddy!", message="Listening...",
                     app_icon=r'./Software/HB-icon.ico')
@@ -2504,7 +2499,6 @@ if __name__ == "__main__":
 
                 elif 'change port number' ==query:
                     mylist = ["5555", "8080", "9090","6969"]
-                    import random
                     os.system(f'adb tcpip {random.choice(mylist)}')
 
                 elif 'add call'== query:
@@ -2543,7 +2537,7 @@ if __name__ == "__main__":
     
                         
     else:
-        import vlc
+        
         good_states = ["State.Playing", "State.NothingSpecial", "State.Opening"]
         try:
             ply = vlc.MediaPlayer(r"./Software/denied.mp3")
