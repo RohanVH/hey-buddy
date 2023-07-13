@@ -687,7 +687,7 @@ def youtube_video2mp3_converter():
     options = {
         'format': 'bestaudio/best',
         'keepvideo': False,
-        'outtmpl': fr'./Software/download file/{filename}'
+        'outtmpl': fr'./Software/downloads/{filename}'
     }
     speak("converting this video to audio")
     with youtube_dl.YoutubeDL(options) as ydl:
@@ -695,14 +695,14 @@ def youtube_video2mp3_converter():
         ydl.download([video_info['webpage_url']])
 
     print("Download complete... {}".format(filename))
-    speak("download completed i have saved this in your download file folder")
+    speak("download completed i have saved this in your downloads folder")
     time.sleep(3)
     speak("should i play this song which i have downloaded?")
     response=takeCommand().lower()
     if 'yes' in response:
         filename = f"{filename}"
         filename = filename.replace("|", '')
-        mp3song = fr"./Software/download file/{filename}"
+        mp3song = fr"./Software/downloads/{filename}"
         os.startfile(mp3song) 
 
     else:
@@ -1614,7 +1614,8 @@ if __name__ == "__main__":
                     keyboard.tap('p')
                     keyboard.release(Key.ctrl)
                     print('printing process activated! \n')
-                elif "what's my internet speed" in query: #module issue
+                elif "what's my internet speed" in query: #module issue (module changed to speedtest-cli)
+                    
                     test = speedtest.Speedtest()
                     print("performing download test...")
                     download_result = test.download()
@@ -1949,7 +1950,7 @@ if __name__ == "__main__":
                     keyboard.tap(Key.enter)
                     print("deleted all temporary files")
                     speak("deleted all temporary files")
-                elif "search"== query:
+                elif "search" in  query:
                     query=query.replace('search','')
                     query=query.replace('in google','')
                     wb.open(f"https://www.google.com/search?q={query}")
@@ -2059,7 +2060,7 @@ if __name__ == "__main__":
                     print("_________________________please wait_____________________________\n")
                     print("\nWait Buddy Downloading this video buddy....")
                     print("_________________________wait Until download is finished_____________________________\n")
-                    yt.streams.first().download(fr"./Software/download file")
+                    yt.streams.first().download(fr"./Software/downloads")
                     list = [1]
                     for i in tqdm(list):
                         time.sleep(2)
@@ -2073,7 +2074,7 @@ if __name__ == "__main__":
                     if 'yes' == condition:
                         filename=yt.title
                         # filename = filename.replace("|", '')
-                        video = fr"./Software/download file/{filename}"
+                        video = fr"./Software/downloads/{filename}"
                         os.startfile(video)
                     elif 'no' in condition:
                         speak("okay not a problem")
