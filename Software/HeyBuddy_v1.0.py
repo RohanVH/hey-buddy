@@ -74,7 +74,7 @@ def wishMe():
     elif hour >= 3 and hour < 12:
         engine.setProperty('voice', voices[0].id)
         engine.setProperty('rate', 170)
-        with open(r"wishes\good morning wishes.txt", "r", encoding="utf8") as file:
+        with open(r"./Software/wishes/good morning wishes.txt", "r", encoding="utf8") as file:
             allText = file.read()
             words = list(map(str, allText.splitlines()))
             morning=random.choice(words)
