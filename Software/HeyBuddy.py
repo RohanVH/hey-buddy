@@ -46,6 +46,7 @@ import englishNews as english
 import kannadaNews as k
 from bs4 import BeautifulSoup
 import requests
+
 warnings.filterwarnings('ignore')
 
 engine = pyttsx3.init('sapi5')
@@ -128,9 +129,12 @@ def takeCommand():
         print(f"\033[95m\t\t\t\t[---->>\tListening...\t<<----]\t\t\t\t\n\033[00m")
         r.pause_threshold = 1
         audio = r.listen(source)
+        msg.notify(title="Hey Buddy!", message="Listening...",
+                            app_icon=r'./Software/HB-icon.ico', timeout=3)
     try:
         print(f"\033[95m\t\t\t\t[---->\tRecognizing...\t<----]\t\t\t\t\n\033[00m")
         query = r.recognize_google(audio, language='en-in')
+        msg.notify(title="Hey Buddy!", message="Recognizing...",app_icon=r'./Software/HB-icon.ico', timeout=3)
         print(f"\t\t\t\tUser said: {query}\n")
 
     except Exception as e:
